@@ -17,7 +17,27 @@ public class Main {
         ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
 //        m1(ctx);
 //        m2(ctx);
-        m3(ctx);
+//        m3(ctx);
+//        m4(ctx);
+        m5(ctx);
+    }
+
+    /**
+     * 复杂属性注入-数组、Map、Properties注入
+     * @param ctx
+     */
+    private static void m5(ClassPathXmlApplicationContext ctx) {
+        User u5 = ctx.getBean("user5", User.class);
+        System.out.println("u5 = " + u5);
+    }
+
+    /**
+     * 复杂属性注入-对象注入
+     * @param ctx
+     */
+    private static void m4(ClassPathXmlApplicationContext ctx) {
+        User u4 = ctx.getBean("user4", User.class);
+        System.out.println("u4 = " + u4);
     }
 
     /**

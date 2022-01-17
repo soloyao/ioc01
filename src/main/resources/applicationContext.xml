@@ -27,4 +27,60 @@
     <bean class="com.zmy.ioc.OkHttpFactory" id="okHttpFactory"/>
     <bean class="okhttp3.OkHttpClient" factory-bean="okHttpFactory" factory-method="getInstance" id="okHttpClient"/>
 
+    <!--复杂属性注入-对象注入-->
+    <bean class="com.zmy.ioc.model.User" id="user4">
+        <property name="id" value="4"/>
+        <property name="address" value="www.zmy.com"/>
+        <property name="username" value="zmy"/>
+        <property name="cat" ref="cat"/>
+    </bean>
+
+    <bean class="com.zmy.ioc.model.Cat" id="cat">
+        <property name="age" value="3"/>
+        <property name="name" value="小白"/>
+    </bean>
+
+    <!--复杂属性注入-数组、Map、Properties注入-->
+    <bean class="com.zmy.ioc.model.User" id="user5">
+        <property name="id" value="5"/>
+        <property name="address" value="www.zmy.com"/>
+        <property name="username" value="zmy"/>
+        <!--<property name="cat" ref="cat"/>-->
+        <property name="cat">
+            <bean class="com.zmy.ioc.model.Cat">
+                <property name="age" value="88"/>
+                <property name="name" value="小黄"/>
+            </bean>
+        </property>
+        <property name="cats">
+            <array>
+                <ref bean="cat"/>
+                <bean class="com.zmy.ioc.model.Cat" id="cat2">
+                    <property name="age" value="8"/>
+                    <property name="name" value="小黑"/>
+                </bean>
+            </array>
+        </property>
+
+        <property name="favorites">
+            <list>
+                <value>足球</value>
+                <value>篮球</value>
+            </list>
+        </property>
+
+        <property name="details">
+            <map>
+                <entry key="gender" value="男"/>
+                <entry key="age" value="99"/>
+            </map>
+        </property>
+
+        <property name="info">
+            <props>
+                <prop key="phone">12345678</prop>
+            </props>
+        </property>
+    </bean>
+
 </beans>
