@@ -1,8 +1,11 @@
 package com.zmy.ioc;
 
 import com.zmy.ioc.model.User;
+import com.zmy.ioc.service.UserService;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
+
+import java.util.List;
 
 /**
  * @Author: MengyaoZeng
@@ -19,7 +22,19 @@ public class Main {
 //        m2(ctx);
 //        m3(ctx);
 //        m4(ctx);
-        m5(ctx);
+//        m5(ctx);
+        m6(ctx);
+
+    }
+
+    /**
+     * Java代码自动扫描注入
+     * @param ctx
+     */
+    private static void m6(ClassPathXmlApplicationContext ctx) {
+        UserService userService = ctx.getBean(UserService.class);
+        List<String> allUsers = userService.getAllUsers();
+        System.out.println("allUsers = " + allUsers);
     }
 
     /**
