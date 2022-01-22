@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="com.zmy.ioc.service" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+    </context:component-scan>
+
+    <!--构造方法注入-->
+    <bean class="com.zmy.ioc.model.User" id="user">
+        <constructor-arg name="id" value="1"/>
+        <constructor-arg name="username" value="zmy"/>
+        <constructor-arg name="address" value="www.zmy.com"/>
+    </bean>
+
+    <!--set方法注入-->
+    <bean class="com.zmy.ioc.model.User" id="user2">
+        <property name="id" value="2"/>
+        <property name="address" value="www.zmy.com"/>
+        <property name="username" value="zmy"/>
+    </bean>
+
+    <!--p名称空间注入-->
+    <bean class="com.zmy.ioc.model.User" id="user3" p:username="zmy" p:id="3" p:address="zmy.com"></bean>
+
+    <!--静态工厂注入-->
+    <!--<bean class="com.zmy.ioc.OkHttpStaticFactory" factory-method="getInstance" id="okHttpClient"/>-->
+
+    <!--实例工厂注入-->
+    <bean class="com.zmy.ioc.OkHttpFactory" id="okHttpFactory"/>
+    <bean class="okhttp3.OkHttpClient" factory-bean="okHttpFactory" factory-method="getInstance" id="okHttpClient"/>
+
+    <!--复杂属性注入-对象注入-->
+    <bean class="com.zmy.ioc.model.User" id="user4">
+        <property name="id" value="4"/>
+        <property name="address" value="www.zmy.com"/>
+        <property name="username" value="zmy"/>
+        <property name="cat" ref="cat"/>
+    </bean>
+
+    <bean class="com.zmy.ioc.model.Cat" id="cat">
+        <property name="age" value="3"/>
+        <property name="name" value="小白"/>
+    </bean>
+
+    <!--复杂属性注入-数组、Map、Properties注入-->
+    <bean class="com.zmy.ioc.model.User" id="user5">
+        <property name="id" value="5"/>
+        <property name="address" value="www.zmy.com"/>
+        <property name="username" value="zmy"/>
+        <!--<property name="cat" ref="cat"/>-->
+        <property name="cat">
+            <bean class="com.zmy.ioc.model.Cat">
+                <property name="age" value="88"/>
+                <property name="name" value="小黄"/>
+            </bean>
+        </property>
+        <property name="cats">
+            <array>
+                <ref bean="cat"/>
+                <bean class="com.zmy.ioc.model.Cat" id="cat2">
+                    <property name="age" value="8"/>
+                    <property name="name" value="小黑"/>
+                </bean>
+            </array>
+        </property>
+
+        <property name="favorites">
+            <list>
+                <value>足球</value>
+                <value>篮球</value>
+            </list>
+        </property>
+
+        <property name="details">
+            <map>
+                <entry key="gender" value="男"/>
+                <entry key="age" value="99"/>
+            </map>
+        </property>
+
+        <property name="info">
+            <props>
+                <prop key="phone">12345678</prop>
+            </props>
+        </property>
+    </bean>
+
+</beans>
